@@ -67,7 +67,7 @@ install -d -m755 $RPM_BUILD_ROOT/%{_unitdir}
 install -m755 %{SOURCE1} $RPM_BUILD_ROOT/%{_bindir}/istio-start.sh
 install -m644 %{SOURCE2} $RPM_BUILD_ROOT/%{_unitdir}/istio.service
 
-binaries=(envoy generate_cert pilot-agent istioctl istio_ca node_agent istio-iptables istio-clean-iptables)
+binaries=(generate_cert pilot-agent istioctl istio_ca node_agent istio-iptables istio-clean-iptables)
 pushd .
 cd ISTIO/src/github.com/istio/istio/out/linux_amd64
 
@@ -121,7 +121,6 @@ ln -s -T /var/lib/istio /etc/istio 2> /dev/null || :
 
 %files
 %license ISTIO/src/github.com/istio/istio/LICENSE
-%attr(2755,root,root) %{_bindir}/envoy
 %attr(2755,root,root) %{_bindir}/generate_cert
 %attr(2755,root,root) %{_bindir}/pilot-agent
 %attr(0755,root,root) %{_bindir}/istio-iptables

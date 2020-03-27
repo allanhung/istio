@@ -1,4 +1,4 @@
-rpm: rpm/builder-image rpm/istio rpm/proxy rpm/sidecar
+rpm: rpm/builder-image rpm/sidecar rpm/proxy
 
 rpm/istio:
 	docker run --rm -it \
