@@ -1,4 +1,4 @@
-rpm: rpm/builder-image rpm/istio rpm/proxy
+rpm: rpm/builder-image rpm/istio rpm/proxy rpm/sidecar
 
 rpm/istio:
 	docker run --rm -it \
@@ -28,6 +28,21 @@ rpm/proxy:
 				istio-rpm-builder \
 				${PWD}/tools/packaging/rpm/build-proxy-rpm.sh
 
+rpm/sidecar:
+	docker run --rm -it \
+				-v ${GO_TOP}:${GO_TOP} \
+        -w ${PWD} \
+        -e USER=${USER} \
+				-e TAG=${TAG} \
+				-e ISTIO_GO=${ISTIO_GO} \
+				-e ISTIO_OUT=${ISTIO_OUT} \
+				-e PACKAGE_VERSION=${PACKAGE_VERSION} \
+				-e USER_ID=$(shell id -u) \
+				-e GROUP_ID=$(shell id -g) \
+				istio-rpm-builder \
+				tools/packaging/rpm/build-sidecar-rpm.sh
+
+rpm/proxy:
 rpm/builder-image:
 	docker build -t istio-rpm-builder -f ${PWD}/tools/packaging/rpm/Dockerfile.build ${PWD}/tools/packaging/rpm
 
@@ -35,4 +50,5 @@ rpm/builder-image:
 	rpm \
 	rpm/istio \
 	rpm/proxy \
+	rpm/sidecar \
 	rpm/builder-image
